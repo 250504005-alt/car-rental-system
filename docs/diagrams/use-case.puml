@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Customer" as Customer
+actor "Admin" as Admin
+actor "Branch Staff" as Staff
+
+rectangle "Car Rental System" {
+  usecase "UC-01: Search Available Vehicles" as UC01
+  usecase "UC-02: Make Reservation" as UC02
+  usecase "UC-03: Pay for Reservation" as UC03
+  usecase "UC-04: Return Vehicle" as UC04
+  usecase "UC-05: Cancel Reservation" as UC05
+
+  usecase "Select Additional Services" as UC06
+  usecase "Calculate Rental Price" as UC07
+  usecase "Send Notification / Audit Log" as UC08
+
+  usecase "Manage Fleet (Add/Remove/Status)" as UC09
+  usecase "Manage Pricing Rules & Discounts" as UC10
+  usecase "View All Reservations & Reports" as UC11
+
+  usecase "Hand Over Vehicle (Pickup)" as UC12
+  usecase "Record Damage / Late Fee" as UC13
+}
+
+Customer --> UC01
+Customer --> UC02
+Customer --> UC03
+Customer --> UC04
+Customer --> UC05
+
+UC02 ..> UC06 : <<include>>
+UC02 ..> UC07 : <<include>>
+UC02 ..> UC08 : <<include>>
+UC03 ..> UC08 : <<include>>
+UC04 ..> UC08 : <<include>>
+UC05 ..> UC08 : <<include>>
+UC04 ..> UC13 : <<extend>>
+
+Admin --> UC09
+Admin --> UC10
+Admin --> UC11
+
+Staff --> UC12
+Staff --> UC04
+Staff --> UC13
+
+@enduml
